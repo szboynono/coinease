@@ -80,7 +80,7 @@ export default function Table({ data }: any) {
               </thead>
               <tbody>
                 {coins.map((coin: any, coinIdx: number) => (
-                  <tr key={coin.name}>
+                  <tr key={coin.name} className="hover:bg-slate-50">
                     <td
                       className={classNames(
                         coinIdx !== coins.length - 1
@@ -99,7 +99,7 @@ export default function Table({ data }: any) {
                         "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                       )}
                     >
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 hover:cursor-pointer">
                         <Image
                           loader={imageLoader}
                           width={24}
@@ -147,7 +147,7 @@ export default function Table({ data }: any) {
                         coinIdx !== coins.length - 1
                           ? "border-b border-gray-200"
                           : "",
-                        "whitespace-nowrap px-3 py-4 text-sm lg:table-cell text-center"
+                        "whitespace-nowrap px-3 py-4 text-sm lg:table-cell text-center hover:cursor-pointer"
                       )}
                     >
 											{coin.change < 0 && <span className="text-green-500">Buy</span>}

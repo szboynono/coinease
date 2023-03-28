@@ -14,6 +14,9 @@ export default function Home() {
       </Head>
       <main className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Logo />
+        <div className="border h-[100px] text-center leading-[100px]">
+          ADs go here
+        </div>
         <Table data={listings.data} />
       </main>
     </>
