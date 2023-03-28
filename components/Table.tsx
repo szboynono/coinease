@@ -60,7 +60,7 @@ export default function Table({ data }: any) {
 
                   <th
                     scope="col"
-                    className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"
+                    className="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter hidden sm:table-cell"
                   >
                     24hr
                   </th>
@@ -108,9 +108,16 @@ export default function Table({ data }: any) {
                             src={"" + coin.id}
                             alt=""
                           />
-                          <div>{coin.name}</div>
+                          <div className="flex flex-col">
+                            <div>{coin.name}</div>
+                            <div className="text-gray-500 sm:hidden">
+                              {coin.symbol}
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-gray-500 hidden md:block">{coin.symbol}</div>
+                        <div className="text-gray-500 hidden md:block">
+                          {coin.symbol}
+                        </div>
                       </div>
                     </td>
                     <td
@@ -121,20 +128,36 @@ export default function Table({ data }: any) {
                         "whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell"
                       )}
                     >
-                      ${" "}
-                      {coin.price < 0.001
-                        ? coin.price.toFixed(8)
-                        : coin.price.toLocaleString("en-US")}
+                      <div>
+                        ${" "}
+                        {coin.price < 0.001
+                          ? coin.price.toFixed(8)
+                          : coin.price.toLocaleString("en-US")}
+                      </div>
+                      <span
+                        className={classNames(
+                          `text-${coin.change < 0 ? "red" : "green"}-500`,
+                          "sm:hidden"
+                        )}
+                      >
+                        {coin.change.toFixed(2)} %
+                      </span>
                     </td>
                     <td
                       className={classNames(
                         coinIdx !== coins.length - 1
                           ? "border-b border-gray-200"
                           : "",
-                        "whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell"
+                        "whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell"
                       )}
                     >
-                      {coin.change.toFixed(2)} %
+                      <span
+                        className={`text-${
+                          coin.change < 0 ? "red" : "green"
+                        }-500`}
+                      >
+                        {coin.change.toFixed(2)} %
+                      </span>
                     </td>
                     <td
                       className={classNames(
@@ -144,7 +167,7 @@ export default function Table({ data }: any) {
                         "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"
                       )}
                     >
-                      {coin.marketCap.toLocaleString("en-US")}
+                      $ {coin.marketCap.toLocaleString("en-US")}
                     </td>
                     <td
                       className={classNames(
