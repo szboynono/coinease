@@ -1,18 +1,25 @@
-const coins = [
-  {
-		rank: 1,
-    name: "Bitcoin",
-    price: "$20,123",
-    change: "20%",
-    marketCap: "$20,12320,123",
-  },
-];
+import Image from "next/image";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Table() {
+const imageLoader = ({ src }: any) => {
+  return `https://s2.coinmarketcap.com/static/img/coins/32x32/${src}.png`;
+};
+
+export default function Table({ data }: any) {
+  console.log(data);
+  const coins = data.map((coin: any) => ({
+    id: coin.id,
+    rank: coin["cmc_rank"],
+    name: coin.name,
+    symbol: coin.symbol,
+    price: coin.quote.USD["price"],
+    change: coin.quote.USD["percent_change_24h"],
+    marketCap: coin.quote.USD["market_cap"],
+  }));
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="mt-8 flow-root">
@@ -55,7 +62,7 @@ export default function Table() {
                 </tr>
               </thead>
               <tbody>
-                {coins.map((coin, coinIdx) => (
+                {coins.map((coin: any, coinIdx: number) => (
                   <tr key={coin.name}>
                     <td
                       className={classNames(
@@ -65,7 +72,7 @@ export default function Table() {
                         "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                       )}
                     >
-                      1
+                      {coin.rank}
                     </td>
                     <td
                       className={classNames(
@@ -75,7 +82,17 @@ export default function Table() {
                         "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                       )}
                     >
-                      {coin.name}
+                      <div className="flex items-center gap-2">
+                        <Image
+                          loader={imageLoader}
+                          width={24}
+                          height={24}
+                          src={"" + coin.id}
+                          alt=""
+                        />
+                        <div>{coin.name}</div>
+                        <div className="text-gray-500">{coin.symbol}</div>
+                      </div>
                     </td>
                     <td
                       className={classNames(
@@ -85,7 +102,7 @@ export default function Table() {
                         "whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell"
                       )}
                     >
-                      {coin.price}
+                      $ {coin.price.toLocaleString("en-US")}
                     </td>
                     <td
                       className={classNames(
@@ -95,7 +112,7 @@ export default function Table() {
                         "whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell"
                       )}
                     >
-                      {coin.change}
+                      {coin.change.toFixed(2)} %
                     </td>
                     <td
                       className={classNames(
@@ -105,7 +122,7 @@ export default function Table() {
                         "whitespace-nowrap hidden px-3 py-4 text-sm text-gray-500 sm:table-cell"
                       )}
                     >
-                      {coin.marketCap}
+                      {coin.marketCap.toLocaleString("en-US")}
                     </td>
                   </tr>
                 ))}

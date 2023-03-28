@@ -1,8 +1,10 @@
 import Logo from "@/components/Logo";
 import Table from "@/components/Table";
 import Head from "next/head";
+import listings from '../mocks/listings.json';
 
 export default function Home() {
+  console.log(listings)
   return (
     <>
       <Head>
@@ -13,7 +15,7 @@ export default function Home() {
       </Head>
       <main className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <Logo />
-        <Table />
+        <Table data={listings.data} />
       </main>
     </>
   );
