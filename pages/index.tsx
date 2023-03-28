@@ -4,7 +4,6 @@ import Head from "next/head";
 import listings from '../mocks/listings.json';
 
 export default function Home() {
-  console.log(listings)
   return (
     <>
       <Head>
