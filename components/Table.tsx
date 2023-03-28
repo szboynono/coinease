@@ -20,16 +20,16 @@ export default function Table({ data }: any) {
     marketCap: coin.quote.USD["market_cap"],
   }));
 
-	const rating = useMemo(() => {
-		const currentNum = 0;
-		if (currentNum === 0) {
-			return (<span className="text-green-500">Buy</span>)
-		} else if (currentNum === 1) {
-			return (<span className="text-yellow-500">Hold</span>)
-		} else {
-			return (<span className="text-red-500">Sell</span>)
-		}
-	}, [])
+  const rating = useMemo(() => {
+    const currentNum = 0;
+    if (currentNum === 0) {
+      return <span className="text-green-500">Buy</span>;
+    } else if (currentNum === 1) {
+      return <span className="text-yellow-500">Hold</span>;
+    } else {
+      return <span className="text-red-500">Sell</span>;
+    }
+  }, []);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -70,7 +70,7 @@ export default function Table({ data }: any) {
                   >
                     Market Cap
                   </th>
-									<th
+                  <th
                     scope="col"
                     className="text-center sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell"
                   >
@@ -99,16 +99,18 @@ export default function Table({ data }: any) {
                         "whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                       )}
                     >
-                      <div className="flex items-center gap-2 hover:cursor-pointer">
-                        <Image
-                          loader={imageLoader}
-                          width={24}
-                          height={24}
-                          src={"" + coin.id}
-                          alt=""
-                        />
-                        <div>{coin.name}</div>
-                        <div className="text-gray-500">{coin.symbol}</div>
+                      <div className="flex flex-row items-center gap-2 hover:cursor-pointer ">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            loader={imageLoader}
+                            width={24}
+                            height={24}
+                            src={"" + coin.id}
+                            alt=""
+                          />
+                          <div>{coin.name}</div>
+                        </div>
+                        <div className="text-gray-500 hidden md:block">{coin.symbol}</div>
                       </div>
                     </td>
                     <td
@@ -119,8 +121,10 @@ export default function Table({ data }: any) {
                         "whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell"
                       )}
                     >
-											$ {coin.price < 0.001 ? coin.price.toFixed(8): coin.price.toLocaleString("en-US")}
-                      
+                      ${" "}
+                      {coin.price < 0.001
+                        ? coin.price.toFixed(8)
+                        : coin.price.toLocaleString("en-US")}
                     </td>
                     <td
                       className={classNames(
@@ -142,17 +146,23 @@ export default function Table({ data }: any) {
                     >
                       {coin.marketCap.toLocaleString("en-US")}
                     </td>
-										<td
+                    <td
                       className={classNames(
                         coinIdx !== coins.length - 1
                           ? "border-b border-gray-200"
                           : "",
-                        "whitespace-nowrap px-3 py-4 text-sm lg:table-cell text-center hover:cursor-pointer"
+                        "whitespace-nowrap px-3 py-4 text-sm lg:table-cell text-center "
                       )}
                     >
-											{coin.change < 0 && <span className="text-green-500">Buy</span>}
-											{coin.change > 1 && <span className="text-red-500">Sell</span>}
-											{(coin.change <= 1 && coin.change > 0) && <span className="text-yellow-500">Hold</span>}
+                      {coin.change < 0 && (
+                        <span className="text-green-500">Buy</span>
+                      )}
+                      {coin.change > 1 && (
+                        <span className="text-red-500">Sell</span>
+                      )}
+                      {coin.change <= 1 && coin.change > 0 && (
+                        <span className="text-yellow-500">Hold</span>
+                      )}
                     </td>
                   </tr>
                 ))}
